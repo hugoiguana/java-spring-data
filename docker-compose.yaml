@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+
+  spring-data-db:
+    image: $SPRING_DATA_DB_IMG
+    restart: always
+    container_name: $SPRING_DATA_DB_CONTAINER_NAME
+    environment:
+      POSTGRES_DB: $SPRING_DATA_DB_NAME
+      POSTGRES_USER: $SPRING_DATA_DB_USER
+      POSTGRES_PASSWORD: $SPRING_DATA_DB_PASSWORD
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./db/scripts/:/docker-entrypoint-initdb.d
+      - spring-data-db:/var/lib/postgresql/data
+    networks:
+      - spring-data
+
+  spring-data-ms:
+    image: $SPRING_DATA_MS_IMG:$SPRING_DATA_MS_IMG_VERSION
+    container_name: $SPRING_DATA_MS_CONTAINER_NAME
+    environment:
+      - APP_PORT=$ENV_MS_APP_PORT
+      - DB_URL=$SPRING_DATA_MS_DB_URL
+      - DB_USERNAME=$SPRING_DATA_MS_DB_USER
+      - DB_PASSWORD=$SPRING_DATA_MS_DB_PASSWORD
+      - ACTIVE_PROFILE=$SPRING_DATA_MS_ACTIVE_PROFILE
+      - DB_SCHEMA=$ENV_MS_DB_SCHEMA
+      - SPRING_FLYWAY_ENABLED=$SPRING_DATA_MS_FLYWAY_ENABLED
+      - DB_FLYWAY_TABLE=$ENV_MS_DB_FLYWAY_TABLE
+    ports:
+      - "9091:8080"
+    networks:
+      - spring-data
+    depends_on:
+      - spring-data-db
+
+
+networks:
+  spring-data:
+    driver: bridge
+    name: spring-data
+
+volumes:
+  spring-data-db:
+    name: spring-data-db
