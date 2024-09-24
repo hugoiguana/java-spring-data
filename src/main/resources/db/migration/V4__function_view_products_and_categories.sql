@@ -1,5 +1,6 @@
 drop function if exists test.func_products_view;
-CREATE FUNCTION test.func_products_view(var_category_id varchar, var_order_by_column varchar, var_order_by varchar) RETURNS setof test.products_categories_view
+
+CREATE FUNCTION test.func_products_view(var_category_id uuid, var_order_by_column varchar, var_order_by varchar) RETURNS setof test.products_categories_view
 AS $$
 DECLARE
     var_condition_by_category_id varchar = '';
@@ -25,3 +26,4 @@ begin
 
 END;
 $$ LANGUAGE plpgsql;
+

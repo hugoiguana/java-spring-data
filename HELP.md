@@ -3,6 +3,7 @@
 https://www.postgresql.org/docs/current/plpgsql-statements.html
 https://www.postgresql.org/docs/current/plpgsql-control-structures.html
 https://www.postgresql.org/docs/8.3/xfunc-sql.html
+https://www.baeldung.com/spring-data-jpa-projections
 
 ## Mavem commands:
 ```maven
@@ -82,6 +83,7 @@ SELECT * FROM test.func_products_view(null, 'c.name', 'ASC');
 
 SELECT p.id, p.name, p.description, c.id AS category_id, c.name AS category_name
 FROM test.product p
-JOIN test.category c ON c.id = p.id_category
+         JOIN test.category c ON c.id = p.id_category
 WHERE p.id_category = 'c93232ed-3593-4ec2-bb2d-0497c60e4075';
+
 ```

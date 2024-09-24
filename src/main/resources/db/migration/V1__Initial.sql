@@ -1,7 +1,7 @@
 
 CREATE SCHEMA IF NOT EXISTS test;
 
-CREATE TABLE test.category
+CREATE TABLE IF NOT EXISTS test.category
 (
     id UUID PRIMARY KEY,
     name VARCHAR NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE test.category
     deleted BOOL
 );
 
-CREATE TABLE test.product
+CREATE TABLE IF NOT EXISTS test.product
 (
     id UUID PRIMARY KEY,
     name VARCHAR NOT NULL,

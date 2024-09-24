@@ -1,3 +1,5 @@
+--DROP TYPE IF EXISTS test.products_categories_view;
+
 CREATE TYPE test.products_categories_view AS (
                                                  id UUID,
                                                  "name" varchar,

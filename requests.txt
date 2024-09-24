@@ -1,0 +1,9 @@
+
+curl --request GET \
+  --url http://localhost:8888/api/spring-data/products/v1/category/90e92baf-a09a-4efd-8014-0345858907ca \
+  --header 'Content-Type: application/json'
+
+
+curl --request GET \
+  --url http://localhost:8888/products/v1/category/90e92baf-a09a-4efd-8014-0345858907ca \
+  --header 'Content-Type: application/json'
