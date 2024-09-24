@@ -24,10 +24,10 @@ public class ProductController {
 
     ProductService productService;
 
-    @GetMapping(value = "/category/{categoryId}", produces = "application/json")
-    public ResponseEntity<List<ProductByCategoryIdViewDto>> getBook(@PathVariable UUID categoryId) {
+    @GetMapping(value = "/category/{categoryId}/v1", produces = "application/json")
+    public ResponseEntity<List<ProductByCategoryIdViewDto>> getBookUsingQueryProjectionAndFunctionAsViewOnPostgres(@PathVariable UUID categoryId) {
 
-        var productByCategoryIdViewDto = productService.getViewAllProductsByCategoryId(categoryId)
+        var productByCategoryIdViewDto = productService.getBookUsingQueryProjectionAndFunctionAsViewOnPostgres(categoryId)
                 .stream()
                 .map(p -> ProductByCategoryIdViewDto.builder()
                             .Id(p.getId())
@@ -35,6 +35,23 @@ public class ProductController {
                             .description(p.getDescription())
                             .categoryId(p.getCategoryId())
                             .categoryName(p.getCategoryName())
+                        .build()
+                ).toList();
+
+        return ResponseEntity.ok(productByCategoryIdViewDto);
+    }
+
+    @GetMapping(value = "/category/{categoryId}/v2", produces = "application/json")
+    public ResponseEntity<List<ProductByCategoryIdViewDto>> getBook(@PathVariable UUID categoryId) {
+
+        var productByCategoryIdViewDto = productService.getProductByCategoryIdViewUsingEntityManagerQuery(categoryId)
+                .stream()
+                .map(p -> ProductByCategoryIdViewDto.builder()
+                        .Id(p.getId())
+                        .name(p.getName())
+                        .description(p.getDescription())
+                        .categoryId(p.getCategoryId())
+                        .categoryName(p.getCategoryName())
                         .build()
                 ).toList();
 
